@@ -1,0 +1,93 @@
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #ced6e0;
+            font-family: sans-serif;
+        }
+
+        h3 {
+            font-size: 27px;
+            font-weight: bold;
+            text-align: center;
+            color: #1e272e;
+        }
+
+        .login {
+            font: bold 15px sans-serif;
+        }
+
+        .bloque {
+            width: 30%;
+            border: 1px solid #636e72;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f1f2f6;
+            margin: 110px auto;
+            box-shadow: 2px 2px 5px 2px gray;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        nav{
+            box-shadow: 0px 2px 5px 2px gray;
+        }
+    </style>
+</head>
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0984e3">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Block-Romantic</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('show_signup_form') }}">Sign up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index') }}">About us</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="bloque">
+    <div class="login">
+        <h3>Log in</h3>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            {{ message }}
+        </div>
+        {% endfor %}
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.email(class="form-control my-1", placeholder="Email") }}<br>
+                {% for error in form.email.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.password(class="form-control my-1", placeholder="Password") }}<br>
+                {% for error in form.password.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>{{ form.remember_me }} {{ form.remember_me.label(style="color: #1e272e; font-weight: normal") }}</div>
+            <div>
+                {{ form.submit(class="btn btn-block", style="background-color: #0984e3; color: #1e272e; font-weight: bold") }}
+            </div>
+        </form>
+    </div>
+    <div>New here? <a href="{{ url_for('show_signup_form') }}" style="color: #0984e3;">Sign up now!</a></div>
+</div>
+{% endblock %}

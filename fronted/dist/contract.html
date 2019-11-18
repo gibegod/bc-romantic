@@ -1,0 +1,168 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+Nuevo contrato
+{% endblock %}
+
+{% block header %}
+<div class="miniheader">
+    <h2>Block-Romantic</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    {{ message }}
+</div>
+{% endfor %} 
+
+<style>
+    #bloquecontrato {
+        width: 50%;
+        padding: 20px 20px 0px 20px; /*top right bottom left*/
+    }
+
+    label {
+        font-size: 20px;
+    }
+
+    .lista {
+        width: 50%;
+        padding: 20px 20px 0px 20px;
+    }
+
+    .lista h4 {
+        text-align: center;
+    }
+
+    .list-group p {
+        line-height: 17px;
+        font-size: 15px;
+    }
+
+
+    .collapsible {
+        background-color: #74b9ff;
+        color: #1e272e;
+        cursor: pointer;
+        padding: 8px 8px 8px 8px;
+        width: 100%;
+        border: none;
+        border-radius: 4px;
+        text-align: left;
+        outline: none;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .active,
+    .collapsible:hover {
+        background-color: #808e9b;
+    }
+
+    .collapsible:after {
+        content: '\002B';
+        color: #ffffff;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #ffffff;
+    }
+</style>
+
+<div class="d-flex justify-content-start">
+    <div id="bloquecontrato">
+        <h4 style="font-size: 40px; text-align: center;">Create a contract</h4>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.title.label }}
+                {{ form.title(class="form-control", size=128, placeholder="Enter Title") }}<br>
+                {% for error in form.title.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.description.label }}
+                {{ form.description(class="form-control", placeholder="Enter Description") }}<br>
+                {% for error in form.description.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.price.label }}
+                {{ form.price(class="form-control", placeholder="Enter Price (Wei)") }}<br>
+                {% for error in form.price.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.submit(class="btn btn-block", style="background-color: #74b9ff; color: #1e272e; font-weight: bold") }}
+            </div>
+        </form>
+    </div>
+
+    <div class="lista">
+        <h4 style="font-size: 40px;">My Contracts</h4>
+        {%for contract in contracts%}
+        <button type="button" class="collapsible">{{ contract.title }}</button>
+        <div class="content">
+            <div class="list-group-item" style="background-color: #ffffff;">
+                <p class="mb-1 text-break">Description: {{ contract.description }}</p>
+                <p class="mb-1">Price: {{ contract.price }}</p>
+                <p class="mb-1 text-break">Address: {{ contract.address }} </p>
+                <a class="btn btn-block" style="background-color: #74b9ff; color: #1e272e; font-weight: bold" href="edit/{{contract.id}}" role="button">Modificar</a>
+                <a class="btn btn-block" style="background-color: #74b9ff; color: #1e272e; font-weight: bold" href="delete/{{contract.id}}" role="button">Eliminar</a>
+                <a class="btn btn-block" style="background-color: #74b9ff; color: #1e272e; font-weight: bold" href="onsale/{{contract.id}}" role="button">onSale</a>
+                <div style="padding: 4px;"></div>
+            </div>
+        </div>
+        <!--    <div class="list-group">
+        <div class="list-group-item" style="background-color: #ffffff; border-color: #636e72;">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ contract.title }}</h5>
+            </div>
+            <p class="mb-1 text-break">Description: {{ contract.description }}</p>
+            <p class="mb-1">Price: {{ contract.price }}</p>
+            <p class="mb-1">Address: {{ contract.address }} </p>
+            <form action="/buy">
+            <p>{{ form.buy (class="btn btn-block", style="background-color: #74b9ff; color: #1e272e; font-weight: bold")}}</p>
+            </form>
+        </div>
+    </div> -->
+        <div style="padding: 2px;"></div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+</script>
+
+{% endblock %}

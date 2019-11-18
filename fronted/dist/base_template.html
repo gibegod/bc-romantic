@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!--  <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        #granbloque {
+            background-color: #dfe4ea;
+        }
+        .header {
+            text-align: center;
+            background-color: #0984e3;
+            box-shadow: 0px 3px 4px 0px gray;
+            margin-top: -4%;
+            height: 130px;
+            padding: 20px 0px;
+        }
+
+        .header h1 {
+            font-weight: bold;
+            font-size: 40px;
+            color: #1e272e;
+        }
+
+        .header h4 {
+            font-size: 17px;
+
+        }
+
+        .miniheader {
+            text-align: center;
+            margin-top: -4%;
+            background-color: #0984e3;
+            box-shadow: 0px 3px 4px 0px gray;
+        }
+
+        .fijo {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 25%,
+                    rgba(255, 255, 255, 0.2) 75%, rgba(255, 255, 255, 0) 100%);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        body {
+            background-color: #ced6e0;
+            padding: 0px 75px;
+        }
+
+        footer {
+            font-weight: bold;
+            clear: both;
+            padding: 15px;
+            font-size: 10px;
+            background-color: #ced6e0;
+        }
+
+        .contenido {
+            padding: 5px;
+        }
+
+        #name {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        textarea {
+	        resize: none;
+        }  
+
+        /* The side navigation menu */
+        .sidenav {
+            height: 100%;
+            /* 100% Full-height */
+            width: 0;
+            /* 0 width - change this with JavaScript */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Stay on top */
+            top: 0;
+            /* Stay at the top */
+            left: 0;
+            background-color: #1e272e;
+            /* Black*/
+            overflow-x: hidden;
+            /* Disable horizontal scroll */
+            padding-top: 60px;
+            /* Place content 60px from the top */
+            transition: 0.5s;
+            /* 0.5 second transition effect to slide in the sidenav */
+        }
+
+        /* The navigation menu links */
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #ced6e0;
+            display: block;
+            transition: 0.3s;
+        }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover {
+            color: #ced6e0;
+        }
+
+        /* Position and style the close button (top right corner) */
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+        #main {
+            transition: margin-left .5s;
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        #open {
+            margin-left: 25px;
+        }
+
+
+        /* Style the sidenav links and the dropdown button */
+        .dropdown-btn {
+            padding: 6px 8px 6px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #ced6e0;
+            display: block;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* On mouse-over */
+        .sidenav a:hover,
+        .dropdown-btn:hover {
+            color: #f1f1f1;
+        }
+
+        /* Add an active class to the active dropdown button */
+        .active {
+            color: white;
+        }
+
+        .dropdown-container {
+            display: none;
+            background-color: #1e272e;
+            padding-left: 8px;
+            
+        }
+        .dropdown-container a{
+            font-size: 18px;
+        }
+
+        /* Optional: Style the caret down icon */
+        .fa-caret-down {
+            float: right;
+            padding-right: 8px;
+        }
+    </style>
+</head>
+
+
+<body>
+<div id="granbloque">
+    <span id="open" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('show_signup_form') }}">Signup</a>
+        <a href="https://wallpapercave.com/wp/wp2068399.jpg">JRR(10)</a>
+        {% else %}
+        <a href="{{ url_for('account') }}">Account</a>
+        <strong id="name">{{ current_user.name }}</strong>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('wallet') }}">Wallet</a>
+        <a href="{{ url_for('contract') }}">Contracts</a>
+        <a href="{{ url_for('contratosdisponibles') }}">Available contracts</a>
+        <button class="dropdown-btn">Contracts
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="{{ url_for('contract') }}">Create contract</a>
+            <a href="#">My contracts</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div id="main">
+        {% block header %}{% endblock %}
+        <div class="contenido">
+            {% block content %}{% endblock %}
+        </div>
+        <footer>Copyright © 1999-2019 Block-Romatic.</footer>
+    </div>
+</div>
+
+    <!-- Use any element to open the sidenav -->
+    <script>
+            /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+    
+            /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+    
+            //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+            var dropdown = document.getElementsByClassName("dropdown-btn");
+            var i;
+    
+            for (i = 0; i < dropdown.length; i++) {
+                dropdown[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var dropdownContent = this.nextElementSibling;
+                    if (dropdownContent.style.display === "block") {
+                        dropdownContent.style.display = "none";
+                    } else {
+                        dropdownContent.style.display = "block";
+                    }
+                });
+            }
+    </script>
+</body>
+
+</html>

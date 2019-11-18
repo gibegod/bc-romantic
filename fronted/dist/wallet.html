@@ -1,0 +1,62 @@
+{% extends "base_template.html" %}
+
+{% block title %}Wallet{% endblock %}
+
+{% block header %}
+<div class="miniheader">
+    <h2>Block-Romantic</h2>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<style>
+    #bloquewallet{
+        width: 50%;
+        color: #1e272e;
+        margin: 0 auto;
+        padding-bottom: 20px;
+    }
+    #bloquewallet h2 {
+        text-align: center;
+        font-size: 30px;
+    }
+    label{
+        font-size: 20px;
+        color: #1e272e;
+    }
+    ::placeholder {
+        font-size: 20px;
+        text-align:left;
+
+    }
+    
+
+</style>
+    <div id="bloquewallet">
+    {%for wallet in wallets%}
+    <h2>{{ wallet.name }}</h2>
+    {% endfor %}
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.name.label }}
+            {{ form.name(size=128, class="form-control", placeholder="Enter title") }}<br>
+            {% for error in form.name.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.key.label }}
+            {{ form.key(class="form-control", placeholder="Enter key") }}
+            <small style="font-size: 12px;">Enter a valid key, please</small>
+            {% for error in form.key.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div><br>
+            {{ form.submit(class="btn btn-block", style="background-color: #74b9ff; color: #1e272e; font-weight: bold") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

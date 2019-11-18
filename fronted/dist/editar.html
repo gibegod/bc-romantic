@@ -1,0 +1,80 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+Edit contract
+{% endblock %}
+
+{% block header %}
+<div class="miniheader">
+    <h2>Block-Romantic</h2>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<style>
+        body {
+            background-color: #ced6e0;
+            font-family: sans-serif;
+        }
+
+        h3 {
+            font-size: 27px;
+            font-weight: bold;
+            text-align: center;
+            color: #1e272e;
+        }
+
+        .edit {
+            font: bold 15px sans-serif;
+        }
+
+        .bloque {
+            width: 30%;
+            border: 1px solid #636e72;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f1f2f6;
+            margin: 70px auto 40px auto;
+            box-shadow: 2px 2px 5px 2px gray;
+        }
+
+        footer{
+            margin-bottom: -10px;
+            margin-left: -5px;
+            width: 105%;
+        }
+</style>
+
+    <div class="bloque">
+        <div class="edit">
+        <h4 style="font-size: 40px; text-align: center;">Edit contract</h4>
+        <form action="/update/{{contract.id}}" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.title.label }}
+                {{ form.title(class="form-control", size=128, placeholder="Enter Title") }}<br>
+                {% for error in form.title.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.description.label }}
+                {{ form.description(class="form-control", placeholder="Enter Description") }}<br>
+                {% for error in form.description.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.price.label }}
+                {{ form.price(class="form-control", placeholder="Enter Price") }}<br>
+                {% for error in form.price.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.submit(class="btn btn-block", style="background-color: #74b9ff; color: #1e272e; font-weight: bold") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

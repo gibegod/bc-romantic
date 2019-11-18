@@ -1,0 +1,126 @@
+{% extends "base_template.html" %}
+
+{% block title %}Account{% endblock %}
+
+{% block header %}
+<div class="miniheader">
+    <h2>Block-Romantic</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    {{ message }}
+</div>
+{% endfor %}
+
+<style>
+    .infocuenta {
+        width: 60%;
+        margin: 0px 20px;
+    }
+
+    .editaccount {
+        padding: 30px;
+        font-size: 20px;
+        border: 1px solid #636e72;
+        border-radius: 5px;
+        background-color: #74b9ff;
+        float: right;
+        margin-top: -150px;
+        margin-right: 30px;
+        width: 30%;
+        height: 20%;
+    }
+
+    .bloquew {
+        padding: 30px;
+        font-size: 20px;
+        border: 1px solid #636e72;
+        border-radius: 5px;
+        background-color: #74b9ff;
+        width: 300px;
+        height: 200px;
+        margin: 60px auto;
+        text-align: center;
+    }
+
+    #bloquewallet {
+        color: #1e272e;
+        border: 1px solid #636e72;
+        border-radius: 4px;
+        padding: 20px;
+        width: 40%;
+        background-color: #ffffff;
+        margin-left: 50px;
+    }
+
+    #bloquewallet h2 {
+        text-align: center;
+        font-size: 30px;
+    }
+
+    label {
+        font-size: 20px;
+        color: #1e272e;
+    }
+
+    ::placeholder {
+        font-size: 20px;
+        text-align: left;
+
+    }
+</style>
+<div id="gena">
+<div class="infocuenta text-justify">
+    <p>Mini tutorial</p>
+    <p>tuto de usar la waller, los contratos, comprar, etc. info cuenta</p>
+    <p>Para crear un contrato o comprar algo primero debes crear una wallet con una key valida. Lorem ipsum dolor sit
+        amet consectetur adipisicing elit. Voluptas, eius qui libero voluptates mollitia unde non vel laborum
+        perferendis in officiis exercitationem expedita sint accusantium soluta facilis saepe, harum recusandae.</p>
+</div>
+<a class="editaccount btn btn-outline-dark btn-block bd-highlight" href="#">Editar datos de la cuenta</a>
+
+{% if wallets == null %}
+<div id="bloquewallet">
+    {%for wallet in wallets%}
+    <h2>{{ wallet.name }}</h2>
+    {% endfor %}
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.name.label }}
+            {{ form.name(size=128, class="form-control", placeholder="Enter title") }}<br>
+            {% for error in form.name.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.key.label }}
+            {{ form.key(class="form-control", placeholder="Enter key") }}
+            <small style="font-size: 12px;">Enter a valid key, please</small>
+            {% for error in form.key.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div><br>
+            {{ form.submit(class="btn btn-block", style="background-color: #74b9ff; color: #1e272e; font-weight: bold") }}
+        </div>
+    </form>
+</div>
+
+{% else %}
+
+    <div class="bloquew">
+        <h3>Actual Wallet:</h3> <br>
+        {%for wallet in wallets%}<h2>{{ wallet.name }}</h2>{% endfor %}
+    </div>
+
+</div>
+{% endif %}
+
+
+</div>
+{% endblock %}

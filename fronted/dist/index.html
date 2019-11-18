@@ -1,0 +1,110 @@
+{% extends "base_template.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+<div class="header align-middle">
+    <h1>Block-Romantic</h1>
+    <h4>Mercado hecho con blockchain</h4> 
+</div> 
+{% endblock %} 
+
+
+{% block content %} 
+<style>
+    .texto {
+        padding: 20px;
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #2f3542;
+    }
+    .texto p {
+        width: 60%;
+    }
+    .lista {
+        width: 55%;
+        padding: 20px;
+        position: relative;
+    }
+    .list-group h5 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .list-group p {
+        line-height: 17px;
+        font-size: 15px;
+    }
+    .goto {
+        padding: 30px;
+        font-size: 40px;
+        color: black;
+        border-color: #636e72;
+    }
+
+    #logsign {
+        float: right;
+        margin-top: -250px;
+        margin-right: 8%;
+        width: 25%;
+        padding: 15px;
+    }
+
+    .columna {
+        width: 32%;
+        border: 1px solid #636e72;
+        border-radius: 4px;
+        padding: 8px;
+        color: #1e272e;
+        float: right;
+        margin-right: 5%;
+    }
+    #index {
+        min-height: 1300px;
+    }
+
+</style>
+<div id="index">
+<div class="texto text-justify">
+    <p>Presentacion de la app</p>
+    <p>Blockchain, también conocido por «cadena en bloque» y por las siglas «BC», es un concepto que nace en 2009 con la aparición de la moneda virtual Bitcoin. Consiste en una especie de registro contable distribuido y compartido que recoge y registra bloques de información. Estos son entrelazados para facilitar la recuperación de dicha información y su verificación. El objetivo es asegurar que la información no sea modificada.</p>
+</div>
+
+
+<div id="logsign" class="d-flex flex-column bd-highlight">
+    <a class="goto btn btn-outline-dark btn-block bd-highlight" style="background-color: #74b9ff;" href="{{ url_for('login') }}" role="button">Log
+        in!</a>
+    <a class="goto btn btn-outline-dark btn-block bd-highlight" style="background-color: #74b9ff;" href="{{ url_for('show_signup_form') }}"
+        role="button">Sign up!</a>
+</div>
+
+<div class="lista">
+    <h4 style="text-align: center; font-size: 32px;">Available contracts</h4>
+    {%for contract in contracts%}
+    <div class="list-group">
+        <div class="list-group-item list-group-item-action" style="background-color: #74b9ff; color: #1e272e; border-color: #636e72;">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-2 text-break">{{ contract.title }}</h5>
+            </div>
+            <p class="mb-1 text-break">Description: {{ contract.description }}</p>
+            <p class="mb-1 text-break">Price: {{ contract.price }}</p>
+            <p class="mb-1 text-break">Address: {{ contract.address }} </p>
+            <form action="/buy">
+            </form>
+        </div>
+    </div>
+    <div style="padding: 2px"></div>
+    {% endfor %}
+</div>
+
+
+<aside class="columna">
+    <p style="text-align: center; font-size: 25px; font-weight: bold;">Noticias</p>
+    <p style="font-size: 20px; text-decoration: underline;">Jordana Blockchain en Cordoba</p>
+    <p class="text-justify">El 22 de noviembre la ciudad de Córdoba, en Argentina, las calles se escucharán las voces de la tecnología Blockchain. Siendo los universitarios, investigadores, profesionales y apasionados quienes comentarán por donde vayan. Esto ocurre gracias a la Jornada Blockchain planeada en el Congreso Internacional de Tecnología Aplicada, Innovación y Educación Continúa.
+    <a href="https://criptotendencia.com/2019/11/18/calendario-de-eventos-blockchain-y-bitcoin/">Seguir leyendo.</a></p>
+    <p style="font-size: 20px; text-decoration: underline;">Blockchain, arma empresarial de la Economía 4.0</p>
+    <p class="text-justify">En los entornos tecnológicos empieza a darse por sabida la lección Blockchain y se tiende hablar más de aplicaciones más que de la base teórica en la que se asientan. Y pese a todos los avances registrados y el ritmo acelerado de los cambios, las empresas siguen huérfanas de conocimiento y se sienten más prisioneras de la tecnología que a las puertas de la revolución de la Economía 4.0. Y es que la primera transacción Blockchain se hizo en el 2009 y hoy es fundamental en la red pública de un país como Estonia, por ejemplo. Napster, Emule, Bitorrent o Skype nacieron del desarrollo de redes distribuidas pero el lanzamiento de las cryptomonedas como bitcoin llevó el concepto a nuevas cotas de desarrollo.
+    <a href="https://www.elperiodico.com/es/economia/20191116/blockchain-securitize-aplicaciones-practicas-7739029">Seguir leyendo.</a></p>
+</aside>
+</div>
+{% endblock %}

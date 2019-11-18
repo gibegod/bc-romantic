@@ -1,0 +1,14 @@
+index:
+color fondo: #dfe4ea
+color lateral: #ced6e0
+
+azul: #0984e3
+azul mas clarito: #74b9ff
+
+negro (texto): #1e272e
+
+bordes: #636e72
+
+gris casi blanco: #f1f2f6
+
+casi blanco: #ffffff
