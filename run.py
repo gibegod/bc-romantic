@@ -11,7 +11,11 @@ from deployContract import newContract, movementHash, w3, abi #contractAccount
 
 app = Flask(__name__, static_folder = "./fronted/dist/static", template_folder = "./fronted/dist")
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
+<<<<<<< HEAD
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/mercadoblockchain'
+=======
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/mercadoblockchain'
+>>>>>>> e8cb4fbb521d3ca51d82b8cb95b7634e0e93cc15
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -159,7 +163,11 @@ def update(id):
         Contract.update_description(contract, description)
         Contract.update_price(contract, price)
         flash ('Contrato actualizado')
+<<<<<<< HEAD
         return redirect(url_for('account'))
+=======
+        return render_template('myaccount.html')
+>>>>>>> e8cb4fbb521d3ca51d82b8cb95b7634e0e93cc15
 
     flash ('No se pudo actualizar el contrato')
     return render_template('contract.html')
