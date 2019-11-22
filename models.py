@@ -70,6 +70,10 @@ class Contract(db.Model):
     @staticmethod
     def get_by_idowner(owner_id):
         return Contract.query.filter_by(owner_id=owner_id).all()
+    
+    @staticmethod
+    def get_contratosdisponibles(owner_id):
+        return Contract.query.filter(owner_id == None).all()
 
     @staticmethod
     def get_by_id(id):

@@ -11,11 +11,7 @@ from deployContract import newContract, movementHash, w3, abi #contractAccount
 
 app = Flask(__name__, static_folder = "./fronted/dist/static", template_folder = "./fronted/dist")
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
-<<<<<<< HEAD
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/mercadoblockchain'
-=======
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/mercadoblockchain'
->>>>>>> e8cb4fbb521d3ca51d82b8cb95b7634e0e93cc15
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -118,7 +114,7 @@ def contract(id):
         title = form.title.data
         description = form.description.data
         price = form.price.data
-        wallet = Wallet.get_by_id(current_user.id)
+        wallet = Wallet.get_by_idownerunico(current_user.id)
         contract_address = newContract(title, price, wallet.key) #inicio contrato y creo en la base de datos
         contract = Contract(owner_id= current_user.id, address = contract_address, title = title, description = description, price = price)
         contract.save()
@@ -163,12 +159,7 @@ def update(id):
         Contract.update_description(contract, description)
         Contract.update_price(contract, price)
         flash ('Contrato actualizado')
-<<<<<<< HEAD
         return redirect(url_for('account'))
-=======
-        return render_template('myaccount.html')
->>>>>>> e8cb4fbb521d3ca51d82b8cb95b7634e0e93cc15
-
     flash ('No se pudo actualizar el contrato')
     return render_template('contract.html')
 
@@ -213,8 +204,7 @@ def buy(id):
     Contract.update_idowner(contract, current_user.id)
     Contract.onSale_False(contract)
     #contract_instance = w3.eth.contract(address= contract.address, abi = abi)
-    #tx_hash2 = contract_instance.functions.setOwner(acctC.address).transact()
-
+    #tx_hash2 = contract_instance.functions.setOwner(acctC.address).call()
     #tx_receipt2 = w3.eth.waitForTransactionReceipt(tx_hash2)
     #hash2 = w3.toHex(tx_receipt2['transactionHash'])
 
@@ -224,9 +214,15 @@ def buy(id):
 @app.route("/contratosdisponibles" , methods=['GET'])
 @login_required
 def contratosdisponibles():
-    contracts = Contract.get_all()
-    id = current_user.id
-    return render_template('contratosdisponibles.html', contracts=contracts, id=id)
+
+    availablecontracts = Contract.get_all()
+    availablecontracts2 = []
+    for availablecontract in availablecontracts:
+        if availablecontract.onSale==True:
+            if availablecontract.owner_id != current_user.id:
+                availablecontracts2.append(availablecontract)
+   
+    return render_template('contratosdisponibles.html', availablecontracts=availablecontracts2)
 
 @app.route("/onsale/<id>")
 @login_required

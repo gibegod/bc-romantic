@@ -26,9 +26,7 @@ Available contracts
 <div class="lista">
         <h4 style="text-align: center; font-size: 32px;">Available contracts</h4>
         
-        {%for contract in contracts%}
-        {% if contract.onSale ==True %}
-        {%if contract.id != id%}
+        {%for contract in availablecontracts%}
         <div class="list-group">
             <div class="list-group-item list-group-item-action" style="background-color: #ffffff; color: #1e272e; border-color: #636e72;">
                 <div class="d-flex w-100 justify-content-between">
@@ -41,8 +39,6 @@ Available contracts
             </div>
         </div>
         <div style="padding: 2px"></div>
-        {%endif%}
-        {%endif%}
         {% endfor %}
         
         
