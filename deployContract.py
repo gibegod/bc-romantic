@@ -1,8 +1,6 @@
 import json
 from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
-#from models import Contract, User
-#from flask_login import current_user
 
 # web3.py instanciado
 w3 = Web3(HTTPProvider(" https://ropsten.infura.io/caf17ea0064344db8f7b2eb3a67bb058 "))
@@ -39,3 +37,12 @@ def movementHash (tx, key):
     return tx_receipt
 
 
+def buyContract (AcctAdress, address):
+    contract_instance = w3.eth.contract(address= address, abi = abi)
+    tx_hash = contract_instance.functions.setOwner(AcctAdress).call()
+    tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    hash = w3.toHex(tx_receipt['transactionHash'])
+    return hash
+    
+    
+    

@@ -7,7 +7,7 @@ from forms import SignupForm, LoginForm, ContractForm, WalletForm
 import json
 from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
-from deployContract import newContract, movementHash, w3, abi #contractAccount
+from deployContract import newContract, movementHash, w3, abi, buyContract #contractAccount
 
 app = Flask(__name__, static_folder = "./fronted/dist/static", template_folder = "./fronted/dist")
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
@@ -203,13 +203,12 @@ def buy(id):
     hash = w3.toHex(tx_receipt['transactionHash'])
     Contract.update_idowner(contract, current_user.id)
     Contract.onSale_False(contract)
-    #contract_instance = w3.eth.contract(address= contract.address, abi = abi)
-    #tx_hash2 = contract_instance.functions.setOwner(acctC.address).call()
-    #tx_receipt2 = w3.eth.waitForTransactionReceipt(tx_hash2)
-    #hash2 = w3.toHex(tx_receipt2['transactionHash'])
 
-    flash('Contract adquired')
-    return render_template('newContract.html', hash=hash) #hash2 = hash2
+    hash2= buyContract(acctC.address, contract.address)
+    print (hash)
+    print (hash2)
+    flash('Contract adquired {hash}, {hash2}')
+    return render_template('newContract.html', hash=hash, hash2 = hash2) #hash2 = hash2hash2 = hash2
 
 @app.route("/contratosdisponibles" , methods=['GET'])
 @login_required
