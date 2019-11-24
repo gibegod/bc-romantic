@@ -8,12 +8,23 @@ import json
 from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
 from deployContract import newContract, movementHash, w3, abi, buyContract 
+from flask_mail import Mail, Message
 
+#configuraciones base de datos
 app = Flask(__name__, static_folder = "./fronted/dist/static", template_folder = "./fronted/dist")
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/mercadoblockchain'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#configuraciones mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'mercadoblockchain@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Yagami40811091'
 
+mail = Mail()
+mail.init_app(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 login_manager = LoginManager(app)
@@ -23,10 +34,6 @@ db = SQLAlchemy(app)
 from models import User, Contract, Wallet
 
 @app.route('/', defaults={'path': ''})
-
-#@app.route('/')
-#def dender_vue():
-#    return login();
 
 @app.route("/")
 def index():
@@ -65,6 +72,12 @@ def show_signup_form():
                 user = User(name=name, email=email)
                 user.set_password(password)
                 user.save()
+                #enviamos mail al registrarse
+                msg = Message('Gracias por registrarte', 
+                sender = app.config['MAIL_USERNAME'],
+                recipients = [user.email])
+                msg.html = render_template('email.html', user = user.name)
+                mail.send(msg)
                 # Dejamos al usuario logueado
                 login_user(user, remember=True)
                 return redirect(url_for('account'))
@@ -249,6 +262,7 @@ def onSale(id):
     
     flash ('El contrato ya se encuentra a la venta')
     return redirect (url_for('contract'))
+
 
 
     
