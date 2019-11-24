@@ -7,7 +7,7 @@ from forms import SignupForm, LoginForm, ContractForm, WalletForm
 import json
 from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
-from deployContract import newContract, movementHash, w3, abi, buyContract #contractAccount
+from deployContract import newContract, movementHash, w3, abi, buyContract 
 
 app = Flask(__name__, static_folder = "./fronted/dist/static", template_folder = "./fronted/dist")
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
@@ -198,17 +198,32 @@ def buy(id):
     ),
     str(walletC.key),
     )
+
     tx_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
     tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
     hash = w3.toHex(tx_receipt['transactionHash'])
+
     Contract.update_idowner(contract, current_user.id)
     Contract.onSale_False(contract)
+    
+    flash('Contract adquired')
 
-    hash2= buyContract(acctC.address, contract.address)
-    print (hash)
-    print (hash2)
-    flash('Contract adquired {hash}, {hash2}')
-    return render_template('newContract.html', hash=hash, hash2 = hash2) #hash2 = hash2hash2 = hash2
+    return render_template('newContract.html', hash=hash, contract=contract) 
+
+@app.route("/buy/setowner/<id>", methods=['GET', 'POST'])
+@login_required
+def setowner(id):
+    contract = Contract.get_by_id(id) 
+    user = User.get_by_id(current_user.id)
+
+    walletC = Wallet.get_by_idownerunico(current_user.id)
+    acctC = w3.eth.account.privateKeyToAccount(walletC.key)
+
+    tx = buyContract(walletC.key, contract)
+
+    flash('Owner setter')
+
+    return render_template('newContract.html', tx = tx, contract=contract)
 
 @app.route("/contratosdisponibles" , methods=['GET'])
 @login_required

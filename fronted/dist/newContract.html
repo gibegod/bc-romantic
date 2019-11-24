@@ -1,12 +1,18 @@
 {% extends "base_template.html" %}
 
 {% block title %}Compra finalizada{% endblock %} 
-{{hash}}
-{{hash2}}
+
 {% block content %}
 {% for message in get_flashed_messages() %}
 <div class="alert alert-warning">
     {{ message }}
 </div>
+
+<h2>transaccion hash: {{hash}} </h2>
+
+<h2>transaccion hash: {{tx}} </h2>
+
+<a class="nav-link" href="setowner/{{contract.id}}">Setear dueño</a>
 {% endfor %} 
+
 {% endblock %} 
