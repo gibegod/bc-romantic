@@ -128,6 +128,9 @@ def contract(id):
         description = form.description.data
         price = form.price.data
         wallet = Wallet.get_by_idownerunico(current_user.id)
+        if not wallet:
+            flash('No tiene una wallet activa, para continuar por favor ingrese una')
+            return redirect(url_for('wallet'))
         contract_address = newContract(title, price, wallet.key) #inicio contrato y creo en la base de datos
         contract = Contract(owner_id= current_user.id, address = contract_address, title = title, description = description, price = price)
         contract.save()
@@ -201,6 +204,10 @@ def buy(id):
     walletC = Wallet.get_by_idownerunico(current_user.id)
     acctC = w3.eth.account.privateKeyToAccount(walletC.key) #direccion comprador
 
+    if not walletC:
+            flash('No tiene una wallet activa, para continuar por favor ingrese una')
+            return redirect(url_for('wallet'))
+
     signed_txn = w3.eth.account.signTransaction(dict(
     nonce=w3.eth.getTransactionCount(str(acctC.address)),
     gasPrice=w3.eth.gasPrice,
@@ -241,6 +248,11 @@ def setowner(id):
 @app.route("/contratosdisponibles" , methods=['GET'])
 @login_required
 def contratosdisponibles():
+    wallet = Wallet.get_by_idownerunico(current_user.id)
+
+    if not wallet:
+            flash('No tiene una wallet activa, para continuar por favor ingrese una')
+            return redirect(url_for('wallet'))
 
     availablecontracts = Contract.get_all()
     availablecontracts2 = []
