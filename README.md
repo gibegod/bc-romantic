@@ -6,6 +6,7 @@ Pasos:
 4. Instalar en consola:
 npm install truffle
 pip install web3
+pip install Flask-Mail
 5. Dentro de la consola escribir 'python3', y luego:
 >>> from run import db
 
@@ -21,6 +22,6 @@ set "FLASK_ENV=development"
 9. Dirigirse a localhost:5000 y la magia ocurrira.
 
 Base de datos en local: 'mysql+pymysql://root:@localhost/mercadoblockchain'
-Base de datos en web: 'mysql+pymysql://gibegod:lopez999@gibegod.mysql.pythonanywhere-services.com/gibegod$miniblog'
+Base de datos en web: 'mysql+pymysql://gibegod:lopez999@gibegod.mysql.pythonanywhere-services.com/gibegod$mercadoblockchain'
 
 Issues server: https://codigofacilito.com/articulos/integracion-vue-flask

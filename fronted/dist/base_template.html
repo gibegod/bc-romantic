@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <!-- Boostrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
     <!--  <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">-->
+    <!-- Awesome font -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet">
+    <!-- Scroll Reveal -->
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
     <style>
-        * {
-            font-family: sans-serif;
-        }
-
         #granbloque {
             background-color: #dfe4ea;
         }
+
         .header {
             text-align: center;
             background-color: #0984e3;
@@ -36,7 +36,6 @@
 
         .header h4 {
             font-size: 17px;
-
         }
 
         .miniheader {
@@ -61,6 +60,7 @@
         body {
             background-color: #ced6e0;
             padding: 0px 75px;
+            font-family: 'Titillium Web', sans-serif;
         }
 
         footer {
@@ -85,8 +85,8 @@
         }
 
         textarea {
-	        resize: none;
-        }  
+            resize: none;
+        }
 
         /* The side navigation menu */
         .sidenav {
@@ -186,9 +186,10 @@
             display: none;
             background-color: #1e272e;
             padding-left: 8px;
-            
+
         }
-        .dropdown-container a{
+
+        .dropdown-container a {
             font-size: 18px;
         }
 
@@ -202,70 +203,134 @@
 
 
 <body>
-<div id="granbloque">
-    <span id="open" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        {% if current_user.is_anonymous %}
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('login') }}">Login</a>
-        <a href="{{ url_for('show_signup_form') }}">Signup</a>
-        <a href="https://wallpapercave.com/wp/wp2068399.jpg">JRR(10)</a>
-        {% else %}
-        <a href="{{ url_for('account') }}">Account</a>
-        <strong id="name">{{ current_user.name }}</strong>
-        <a href="{{ url_for('logout') }}">Logout</a>
-        <a href="{{ url_for('wallet') }}">Wallet</a>
-        <a href="{{ url_for('contract') }}">Contracts</a>
-        <a href="{{ url_for('contratosdisponibles') }}">Available contracts</a>
-        <button class="dropdown-btn">Contracts
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="{{ url_for('contract') }}">Create contract</a>
-            <a href="#">My contracts</a>
+    <!-- MENU -->
+    <div id="granbloque">
+        <span id="open" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('show_signup_form') }}">Signup</a>
+            <a href="https://wallpapercave.com/wp/wp2068399.jpg">JRR(10)</a>
+            {% else %}
+            <a href="{{ url_for('account') }}">Account</a>
+            <strong id="name">{{ current_user.name }}</strong>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('wallet') }}">Wallet</a>
+            <a href="{{ url_for('contract') }}">Contracts</a>
+            <a href="{{ url_for('contratosdisponibles') }}">Available contracts</a>
+            <!-- <button class="dropdown-btn">Contracts
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="{{ url_for('contract') }}">Create contract</a>
+                <a href="#">My contracts</a>
+            </div> -->
+            {% endif %}
         </div>
-        {% endif %}
+
+        <div id="main">
+            {% block header %}{% endblock %}
+            <div class="contenido">
+                {% block content %}{% endblock %}
+            </div>
+            <footer>Copyright © 1999-2019 Block-Romatic.</footer>
+        </div>
     </div>
 
-    <div id="main">
-        {% block header %}{% endblock %}
-        <div class="contenido">
-            {% block content %}{% endblock %}
-        </div>
-        <footer>Copyright © 1999-2019 Block-Romatic.</footer>
-    </div>
-</div>
+
+    <!-- Boostrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
     <!-- Use any element to open the sidenav -->
     <script>
-            /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
-            function openNav() {
-                document.getElementById("mySidenav").style.width = "250px";
-                document.getElementById("main").style.marginLeft = "250px";
-            }
-    
-            /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
-            function closeNav() {
-                document.getElementById("mySidenav").style.width = "0";
-                document.getElementById("main").style.marginLeft = "0";
-            }
-    
-            //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-            var dropdown = document.getElementsByClassName("dropdown-btn");
-            var i;
-    
-            for (i = 0; i < dropdown.length; i++) {
-                dropdown[i].addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    var dropdownContent = this.nextElementSibling;
-                    if (dropdownContent.style.display === "block") {
-                        dropdownContent.style.display = "none";
-                    } else {
-                        dropdownContent.style.display = "block";
-                    }
+        /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+        //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+
+
+        //ScrollReveal
+        window.sr = ScrollReveal();
+        sr.reveal('.header', {
+            duration: 2000 //milisegundos
+        });
+        sr.reveal('#open', {
+            duration: 1000, //milisegundos
+            origin: 'top'
+        });
+        sr.reveal('.info-left', {
+            duration: 2000, //milisegundos
+            origin: 'left',
+            distance: '300px'
+        });
+        sr.reveal('.available-contracts', {
+            duration: 2000, //milisegundos
+            origin: 'bottom',
+            distance: '300px'
+        });
+        sr.reveal('.noticias', {
+            duration: 2000, //milisegundos
+            origin: 'bottom',
+            distance: '300px'
+        });
+        sr.reveal('#loginsignup', {
+            duration: 2000, //milisegundos
+            origin: 'bottom',
+            delay: 800
+        });
+        /*
+        sr.reveal('', {
+            duration: 2000, //milisegundos
+            origin: 'left',
+            distance: '300px',
+            viewFactor: 0.2
+        });
+        */
+
+        // smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-            }
+            });
+        });
+
     </script>
 </body>
 
