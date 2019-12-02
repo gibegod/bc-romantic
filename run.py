@@ -74,7 +74,7 @@ def show_signup_form():
                 user.set_password(password)
                 user.save()
                 #enviamos mail al registrarse
-                msg = Message('Gracias por registrarte', 
+                msg = Message('Thank you for join us', 
                 sender = app.config['MAIL_USERNAME'],
                 recipients = [user.email])
                 msg.html = render_template('email.html', user = user.name)

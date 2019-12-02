@@ -11,13 +11,13 @@
 
 {% block content %}
 <style>
-    #bloquewallet{
+    .formwallet {
         width: 50%;
         color: #1e272e;
         margin: 0 auto;
         padding-bottom: 20px;
     }
-    #bloquewallet h2 {
+    .formwallet h2 {
         text-align: center;
         font-size: 30px;
     }
@@ -33,7 +33,7 @@
     
 
 </style>
-    <div id="bloquewallet">
+    <div class="formwallet">
     {%for wallet in wallets%}
     <h2>{{ wallet.name }}</h2>
     {% endfor %}
