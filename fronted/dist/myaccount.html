@@ -30,7 +30,7 @@
         font-size: 20px;
         border: 1px solid #636e72;
         border-radius: 5px;
-        background-color: #74b9ff;
+        background-color: #ffffff;
         width: 300px;
         height: 200px;
         margin: 60px auto;
@@ -55,19 +55,18 @@
             <div class="col-md-8">
                 <div class="infocuenta text-justify">
                     <h2>How to use this?</h2>
-                    <p>tuto de usar la waller, los contratos, comprar, etc. info cuenta</p>
                     <p>Para crear un contrato o comprar algo primero debes crear una wallet con una key valida.
                         Lorem ipsum dolor sit
                         amet consectetur adipisicing elit. Voluptas, eius qui libero voluptates mollitia unde non
                         vel laborum
                         perferendis in officiis exercitationem expedita sint accusantium soluta facilis saepe, harum
                         recusandae.</p>
-                        <p>El wei vale x, la wallet usa x moneda. La conversion es tal.</p>
+                        <p>Esta app usa la moneda wei, mientras que la wallet creada en ethereum utiliza el ether. 1 ether equivale a 10^-18 wei.</p>
                 </div>
             </div>
             <div class="col-md-4 my-auto">
-                <a class="editaccount btn btn-outline-dark btn-block bd-highlight"  
-                href="editar_account/{{user.id}}" role="button">Editar Contacto</a>
+                <a class="editaccount btn btn-outline-dark btn-block bd-highlight disabled"  
+                href="editar_account/{{user.id}}" role="button">Modify account</a>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
 class SignupForm(FlaskForm):
-    name = StringField('Nombre', validators=[DataRequired(), Length(max=64)])
+    name = StringField('Name', validators=[DataRequired(), Length(max=64)])
     password = PasswordField('Password', validators=[DataRequired(),  EqualTo('confirm', message='Passwords must match')]) #se podria agregar lo de repetir la contraseña
     confirm = PasswordField ('Repeat Password')
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -26,6 +26,6 @@ class ContractForm(FlaskForm): #creo formulario de contrato
 
 
 class WalletForm(FlaskForm): #formulario de billetera
-    name = StringField('Title', validators=[DataRequired(), Length(max=128)])
+    name = StringField('Name', validators=[DataRequired(), Length(max=128)])
     key = TextAreaField('Key', validators =[DataRequired()])
     submit = SubmitField('Connect wallet')

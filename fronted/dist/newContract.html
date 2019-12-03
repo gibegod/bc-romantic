@@ -1,18 +1,26 @@
 {% extends "base_template.html" %}
 
-{% block title %}Compra finalizada{% endblock %} 
+{% block title %}Purchase{% endblock %}
+
+{% block header %}
+<div class="miniheader">
+    <h2>Block-Romantic</h2>
+</div>
+{% endblock %}
 
 {% block content %}
 {% for message in get_flashed_messages() %}
 <div class="alert alert-warning">
     {{ message }}
 </div>
+<div class="my-5 mx-auto" style="width: 50%; text-align: left;">
+    <h3 class="text-break">Transaction hash: {{hash}} </h3>
+    <h3 class="text-break">Transaction hash: {{tx}} </h3>
+</div>
+<a class="btn btn-block mx-auto p-1" style="background-color: #74b9ff; color: #1e272e; font-weight: bold; width: 20%;"
+    href="setowner/{{contract.id}}">Set owner</a>
+<a class="btn btn-block mx-auto p-1" style="background-color: #74b9ff; color: #1e272e; font-weight: bold; width: 20%;"
+    href="{{ url_for('contract') }}">Back to contract</a>
+{% endfor %}
 
-<h2>transaccion hash: {{hash}} </h2>
-
-<h2>transaccion hash: {{tx}} </h2>
-
-<a class="nav-link" href="setowner/{{contract.id}}">Setear dueño</a>
-{% endfor %} 
-
-{% endblock %} 
+{% endblock %}
