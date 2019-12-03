@@ -80,7 +80,7 @@ def update_account(id):
         email = form.email.data
 
         User.update_name(user, name)
-        User.update_password(user, password)
+        user.set_password(password)
         User.update_email(user, email)
         flash ('Informacion actualizada')
         return redirect(url_for('account'))
