@@ -33,12 +33,40 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def get_by_id(id):
-        return User.query.get(id)
+        return User.query.filter_by(id=id).first()
+     
 
     @staticmethod
     def get_by_email(email):
         return User.query.filter_by(email=email).first()
+    
+    @staticmethod 
+    def update_name(self, newname):
+        stmt = (update(User)
+            .where(User.id == self.id)
+            .values(name= newname)
+             )
+        db.session.execute(stmt)
+        db.session.commit()
  
+    @staticmethod 
+    def update_password(self, newpassword):
+        stmt = (update(User)
+            .where(User.id == self.id)
+            .values(password= newpassword)
+             )
+        db.session.execute(stmt)
+        db.session.commit()
+    
+    @staticmethod 
+    def update_email(self, newemail):
+        stmt = (update(User)
+            .where(User.id == self.id)
+            .values(email= newemail)
+             )
+        db.session.execute(stmt)
+        db.session.commit()
+
 class Contract(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('_user.id', ondelete='CASCADE'), nullable=False)

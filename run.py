@@ -13,7 +13,7 @@ from flask_mail import Mail, Message
 #configuraciones base de datos
 app = Flask(__name__, static_folder = "./fronted/dist/static", template_folder = "./fronted/dist")
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/mercadoblockchain'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/mercadoblockchain'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #configuraciones mail
@@ -44,19 +44,48 @@ def index():
     return render_template("index.html", contracts=contracts)
 
 
-@app.route("/account", methods=['GET','POST'])
+@app.route("/account/", methods=['GET','POST'])
 @login_required #añado en varios lugares el login_required, osea que es necesario estas registrado para que entren a estas rutas
 def account():
     wallets = Wallet.get_by_idowner(current_user.id)
     form = WalletForm()
+    user = User.get_by_id(current_user.id)
     if form.validate_on_submit():
         name = form.name.data
         key = form.key.data
         wallet = Wallet(name=name, owner_id=current_user.id, key = key)
         wallet.save()
         return redirect(url_for('account'))
-    return render_template('myaccount.html', wallets=wallets, form=form)
+    return render_template('myaccount.html', wallets=wallets, form=form, user = user)
 
+
+@app.route ("/account/editar_account/<id>", methods= ['POST', 'GET'])
+@login_required
+def editar_account(id):
+    user = User.get_by_id(current_user.id)
+    form = SignupForm()
+    if user.id == current_user.id:
+        return render_template('editarcontacto.html', user = user, form = form)
+    flash ('No eres este usuario')
+    return render_template('myaccount.html')
+
+@app.route ("/update_account/<id>", methods= ['POST', 'GET'])
+@login_required
+def update_account(id):
+    user = User.get_by_id(current_user.id)
+    form = SignupForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        password = form.password.data
+        email = form.email.data
+
+        User.update_name(user, name)
+        User.update_password(user, password)
+        User.update_email(user, email)
+        flash ('Informacion actualizada')
+        return redirect(url_for('account'))
+    flash ('No se pudo actualizar la informacion de la cuenta')
+    return render_template('myaccount.html')
 
 
 @app.route("/signup/", methods=["GET", "POST"])
@@ -271,9 +300,21 @@ def onSale(id):
     if (contract.onSale==False):
         Contract.onSale_True(contract)
         flash('Contrato puesto a la venta')
-        return redirect (url_for('contract'))
+        return redirect (url_for('contract', contract = contract))
     
     flash ('El contrato ya se encuentra a la venta')
+    return redirect (url_for('contract'))
+
+@app.route("/offsale/<id>")
+@login_required
+def offSale(id):
+    contract = Contract.get_by_id(id)
+    if (contract.onSale==True):
+        Contract.onSale_False(contract)
+        flash('Contrato sacado de la venta')
+        return redirect (url_for('contract', contract = contract))
+    
+    flash ('El contrato esta fuera de la venta')
     return redirect (url_for('contract'))
 
 

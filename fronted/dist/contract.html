@@ -121,9 +121,16 @@
                             <a class="btn btn-block"
                                 style="background-color: #74b9ff; color: #1e272e; font-weight: bold"
                                 href="delete/{{contract.id}}" role="button">Eliminar</a>
+                            {% if contract.onSale == false%}
                             <a class="btn btn-block"
                                 style="background-color: #74b9ff; color: #1e272e; font-weight: bold"
                                 href="onsale/{{contract.id}}" role="button">onSale</a>
+                            {% endif %}
+                            {% if contract.onSale == true%}
+                            <a class="btn btn-block"
+                                style="background-color: #74b9ff; color: #1e272e; font-weight: bold"
+                                href="offsale/{{contract.id}}" role="button">offSale</a>
+                            {% endif %}
                             <div style="padding: 4px;"></div>
                         </div>
                     </div>
