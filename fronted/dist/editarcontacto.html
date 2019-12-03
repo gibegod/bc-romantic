@@ -1,8 +1,6 @@
 {% extends "base_template.html" %}
 
-{% block title %}
-Edit user
-{% endblock %}
+{% block title %}Edit account{% endblock %}
 
 {% block header %}
 <div class="miniheader">
@@ -24,7 +22,7 @@ Edit user
         color: #1e272e;
     }
 
-    .bloqueedit {
+    .bloqueedit-acc {
         border: 1px solid #636e72;
         border-radius: 10px;
         padding: 20px;
@@ -35,40 +33,36 @@ Edit user
 <div class="container">
     <div class="row" style="margin-top: 60px;">
         <div class="col-md-5 mx-auto mb-5">
-            <div class="bloqueedit">
-                <h3>Edit User</h3>
+            <div class="bloqueedit-acc">
+                <h3>Modify account</h3>
                 <form action="/update_account/{{user.id}}" method="post" novalidate>
                     {{ form.hidden_tag() }}
                     <div>
-                        {{ form.name.label }}
-                        {{ form.name(class="form-control", placeholder="Enter name") }}<br>
+                        {{ form.name(class="form-control", placeholder="Enter new username") }}<br>
                         {% for error in form.name.errors %}
                         <span class="text-danger">{{ error }}</span>
                         {% endfor %}
                     </div>
                     <div>
-                        {{ form.password.label }}
-                        {{ form.password(class="form-control", placeholder="Enter password") }}<br>
+                        {{ form.email(class="form-control", placeholder="Enter new email") }}<br>
+                        {% for error in form.email.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        {{ form.password(class="form-control", placeholder="Enter new password") }}<br>
                         {% for error in form.password.errors %}
                         <span class="text-danger">{{ error }}</span>
                         {% endfor %}
                     </div>
                     <div>
-                        {{ form.confirm.label }}
                         {{ form.confirm(class="form-control", placeholder="Please repeat password") }}<br>
                         {% for error in form.confirm.errors %}
                         <span class="text-danger">{{ error }}</span>
                         {% endfor %}
                     </div>
                     <div>
-                        {{ form.email.label }}
-                        {{ form.email(class="form-control", placeholder="Enter email") }}<br>
-                        {% for error in form.email.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    <div>
-                        {{ form.submit(class="btn btn-block", value="Edit", style="background-color: #74b9ff; color: #1e272e; font-weight: bold") }}
+                        {{ form.submit(class="btn btn-block", value="Ok!", style="background-color: #74b9ff; color: #1e272e; font-weight: bold") }}
                     </div>
                 </form>
             </div>

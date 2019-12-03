@@ -34,21 +34,20 @@
 
 </style>
     <div class="formwallet">
-    {%for wallet in wallets%}
-    <h2>{{ wallet.name }}</h2>
-    {% endfor %}
+        <h3>Actual Wallet:</h3>
+        {%for wallet in wallets%}<h2>{{ wallet.name }}</h2>{% endfor %}
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <div>
             {{ form.name.label }}
-            {{ form.name(size=128, class="form-control", placeholder="Enter title") }}<br>
+            {{ form.name(size=128, class="form-control", placeholder="Enter name") }}<br>
             {% for error in form.name.errors %}
             <span class="text-danger">{{ error }}</span>
             {% endfor %}
         </div>
         <div>
             {{ form.key.label }}
-            {{ form.key(class="form-control", placeholder="Enter key") }}
+            {{ form.key(class="form-control", placeholder="    Enter key") }}
             <small style="font-size: 12px;">Enter a valid key, please</small>
             {% for error in form.key.errors %}
             <span class="text-danger">{{ error }}</span>

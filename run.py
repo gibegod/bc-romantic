@@ -13,7 +13,7 @@ from flask_mail import Mail, Message
 #configuraciones base de datos
 app = Flask(__name__, static_folder = "./fronted/dist/static", template_folder = "./fronted/dist")
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/mercadoblockchain'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/mercadoblockchain'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #configuraciones mail
@@ -66,7 +66,7 @@ def editar_account(id):
     form = SignupForm()
     if user.id == current_user.id:
         return render_template('editarcontacto.html', user = user, form = form)
-    flash ('No eres este usuario')
+    flash ("You aren't this user")
     return render_template('myaccount.html')
 
 @app.route ("/update_account/<id>", methods= ['POST', 'GET'])
@@ -82,9 +82,9 @@ def update_account(id):
         User.update_name(user, name)
         User.update_password(user, password)
         User.update_email(user, email)
-        flash ('Informacion actualizada')
+        flash ('Updated information')
         return redirect(url_for('account'))
-    flash ('No se pudo actualizar la informacion de la cuenta')
+    flash ('Could not update account information')
     return render_template('myaccount.html')
 
 
@@ -159,7 +159,7 @@ def contract(id):
         price = form.price.data
         wallet = Wallet.get_by_idownerunico(current_user.id)
         if not wallet:
-            flash('No tiene una wallet activa, para continuar por favor ingrese una')
+            flash('You do not have an active wallet. To continue, please enter a new one')
             return redirect(url_for('wallet'))
         contract_address = newContract(title, price, wallet.key) #inicio contrato y creo en la base de datos
         contract = Contract(owner_id= current_user.id, address = contract_address, title = title, description = description, price = price)
@@ -187,8 +187,8 @@ def edit(id):
     contract = Contract.get_by_id(id)
     form = ContractForm()
     if contract.owner_id == current_user.id:
-        return render_template('editar.html', contract = contract, form = form)
-    flash ('No eres el dueño de este contrato')
+        return render_template('editarcontract.html', contract = contract, form = form)
+    flash ('You are not the owner of this contract')
     return render_template('contract.html')
 
 @app.route ("/update/<id>", methods= ['POST', 'GET'])
@@ -204,9 +204,9 @@ def update(id):
         Contract.update_title(contract, title)
         Contract.update_description(contract, description)
         Contract.update_price(contract, price)
-        flash ('Contrato actualizado')
+        flash ('Updated contract')
         return redirect(url_for('account'))
-    flash ('No se pudo actualizar el contrato')
+    flash ('Contract could not be updated')
     return render_template('contract.html')
 
 @app.route("/delete/<id>", methods=['GET','POST'] )
@@ -215,7 +215,7 @@ def delete(id):
     contract = Contract.get_by_id(id)
     db.session.delete(contract)
     db.session.commit()
-    flash('Contrato eliminado')
+    flash('Contract removed')
     return redirect (url_for('contract'))
 
 @app.route("/buy/<id>", methods=['GET','POST'])
@@ -224,9 +224,9 @@ def buy(id):
 
     contract = Contract.get_by_id(id) #instancio contrato 
     user = User.get_by_id(current_user.id) #instancio comprador
-    if (contract.owner_id == current_user.id):
-        flash('Usted es el dueño de este contrato')
-        return render_template('newContract.html') 
+    #if (contract.owner_id == current_user.id):
+    #    flash('You are the owner of this contract')
+    #    return render_template('newContract.html') 
 
     walletV =  Wallet.get_by_idownerunico(contract.owner_id) 
     acctV = w3.eth.account.privateKeyToAccount(walletV.key) #direccion vendedor
@@ -235,7 +235,7 @@ def buy(id):
     acctC = w3.eth.account.privateKeyToAccount(walletC.key) #direccion comprador
 
     if not walletC:
-            flash('No tiene una wallet activa, para continuar por favor ingrese una')
+            flash('You do not have an active wallet. To continue, please enter a new one')
             return redirect(url_for('wallet'))
 
     signed_txn = w3.eth.account.signTransaction(dict(
@@ -281,7 +281,7 @@ def contratosdisponibles():
     wallet = Wallet.get_by_idownerunico(current_user.id)
 
     if not wallet:
-            flash('No tiene una wallet activa, para continuar por favor ingrese una')
+            flash('You do not have an active wallet. To continue, please enter a new one')
             return redirect(url_for('wallet'))
 
     availablecontracts = Contract.get_all()
@@ -299,10 +299,10 @@ def onSale(id):
     contract = Contract.get_by_id(id)
     if (contract.onSale==False):
         Contract.onSale_True(contract)
-        flash('Contrato puesto a la venta')
+        flash('Contract on sale')
         return redirect (url_for('contract', contract = contract))
     
-    flash ('El contrato ya se encuentra a la venta')
+    flash ('Contract is already on sale')
     return redirect (url_for('contract'))
 
 @app.route("/offsale/<id>")
@@ -311,10 +311,10 @@ def offSale(id):
     contract = Contract.get_by_id(id)
     if (contract.onSale==True):
         Contract.onSale_False(contract)
-        flash('Contrato sacado de la venta')
+        flash('Contract out of sale')
         return redirect (url_for('contract', contract = contract))
     
-    flash ('El contrato esta fuera de la venta')
+    flash ('The contract is out of sale')
     return redirect (url_for('contract'))
 
 
