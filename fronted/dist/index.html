@@ -85,6 +85,7 @@
                 <div class="available-contracts">
                     <h4 style="text-align: center; font-size: 32px;">Available contracts</h4>
                     {%for contract in contracts%}
+                    {% if contract.onSale == true%}
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action"
                             style="background-color: #74b9ff; color: #1e272e; border-color: #636e72;">
@@ -99,6 +100,7 @@
                         </div>
                     </div>
                     <div style="padding: 2px"></div>
+                    {% endif%}
                     {% endfor %}
                 </div>
             </div>

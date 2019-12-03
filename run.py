@@ -270,7 +270,7 @@ def setowner(id):
     acctC = w3.eth.account.privateKeyToAccount(walletC.key)
 
     tx = buyContract(walletC.key, contract)
-
+    
     flash('Owner setter')
 
     return render_template('newContract.html', tx = tx, contract=contract)
